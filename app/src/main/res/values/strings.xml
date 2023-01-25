@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Szakdolgozat</string>
+    <string name="user">Felhasználó</string>
+    <string name="admin">Admin</string>
+    <string name="trainer">Edző</string>
+    <string name="send">Küldés</string>
+    <string name="title_activity_tracker">TrackerActivity</string>
+</resources>
