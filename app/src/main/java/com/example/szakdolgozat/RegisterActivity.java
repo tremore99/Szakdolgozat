@@ -1,5 +1,6 @@
 package com.example.szakdolgozat;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
@@ -7,6 +8,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterActivity extends AppCompatActivity {
     private static final String LOG_TAG = RegisterActivity.class.getName();
@@ -18,6 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText userPasswordAgainEditText;
 
     private SharedPreferences preferences;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +53,8 @@ public class RegisterActivity extends AppCompatActivity {
         userPasswordEditText.setText(password);
         userPasswordAgainEditText.setText(password);
 
+        mAuth = FirebaseAuth.getInstance();
+
         Log.i(LOG_TAG, "onCreate");
     }
 
@@ -58,9 +68,22 @@ public class RegisterActivity extends AppCompatActivity {
             Log.e(LOG_TAG, "Nem egyenlő a jelsző és a megerősitése");
         }
 
-        Log.i(LOG_TAG, "Regisztrált: " + userName + ", email: " + userEmail);
+        mAuth.createUserWithEmailAndPassword(userEmail, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                Log.i(LOG_TAG, "itt vagyok");
+                if (task.isSuccessful()) {
+                    Log.d(LOG_TAG, "User created successfully");
+                    Toast.makeText(RegisterActivity.this, "User was created successfully", Toast.LENGTH_LONG).show();
+                    // TODO
+                } else {
+                    Log.d(LOG_TAG, "User wasnt created");
+                    Toast.makeText(RegisterActivity.this, "User wasn't created successfully: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
-        //TODO A regisztrációs funkcionalitást meg kellene valósitani egyszer.
+        Log.i(LOG_TAG, "Regisztrált: " + userName + ", email: " + userEmail);
     }
 
     public void cancel(View view) {
