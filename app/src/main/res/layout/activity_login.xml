@@ -22,7 +22,7 @@
         android:id="@+id/userEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Felhasználónév"
+        android:hint="E-mail cim"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginRight="@dimen/default_margin"
@@ -68,6 +68,18 @@
         android:layout_below="@id/Login" />
 
     <Button
+        android:id="@+id/Google"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Google regisztráció"
+        android:onClick="loginWithGoogle"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/Register"
+        android:layout_marginTop="50dp"
+        />
+
+    <Button
         android:id="@+id/Back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,6 +88,6 @@
         android:onClick="cancel"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/Register" />
+        android:layout_below="@id/Google" />
 
 </RelativeLayout>

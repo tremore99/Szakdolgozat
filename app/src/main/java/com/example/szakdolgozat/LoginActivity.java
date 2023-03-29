@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int SECRET_KEY = 99;
     private static final int RC_SIGN_IN = 123;
 
-    EditText userNameET;
+    EditText userEmailET;
     EditText passwordET;
 
     private SharedPreferences preferences;
@@ -41,8 +41,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //megkeressük az username-t meg a passwordot
-        userNameET = findViewById(R.id.userEditText);
+        //megkeressük az email-t meg a passwordot
+        userEmailET = findViewById(R.id.userEditText);
         passwordET = findViewById(R.id.passwordEditText);
 
         preferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        String userName = userNameET.getText().toString();
+        String userName = userEmailET.getText().toString();
         String password = passwordET.getText().toString();
 
         Log.i(LOG_TAG, "Bejelentkezett: " + userName + ", jelszó: " + password);
@@ -78,7 +78,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    //TODO meg kell csinálni a gombot
     public void loginWithGoogle(View view) {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -91,10 +90,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requsetCode, int resultCode, Intent data) {
-        super.onActivityResult(requsetCode, resultCode, data);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requsetCode == RC_SIGN_IN) {
+        if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 
             try {
@@ -156,7 +155,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onPause();
 
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("username", userNameET.getText().toString());
+        editor.putString("email", userEmailET.getText().toString());
         editor.putString("password", passwordET.getText().toString());
 
         editor.apply();
