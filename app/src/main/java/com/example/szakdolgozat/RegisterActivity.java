@@ -3,6 +3,7 @@ package com.example.szakdolgozat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -75,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Log.d(LOG_TAG, "User created successfully");
                     Toast.makeText(RegisterActivity.this, "User was created successfully", Toast.LENGTH_LONG).show();
-                    // TODO
+                    MainMenu();
                 } else {
                     Log.d(LOG_TAG, "User wasnt created");
                     Toast.makeText(RegisterActivity.this, "User wasn't created successfully: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
@@ -88,6 +89,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void cancel(View view) {
         finish();
+    }
+
+    public void MainMenu() {
+        Intent intent = new Intent(this, User.class);
+        startActivity(intent);
     }
 
     @Override

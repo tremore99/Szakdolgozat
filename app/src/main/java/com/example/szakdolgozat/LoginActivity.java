@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(LoginActivity.this, "Sikeres bejelentkezés", Toast.LENGTH_LONG).show();
+                    MainMenu();
                 } else {
                     Log.d(LOG_TAG, "User wasn't signed in");
                     Toast.makeText(LoginActivity.this, "Sikertelen bejelentkezés", Toast.LENGTH_LONG).show();
@@ -86,6 +87,11 @@ public class LoginActivity extends AppCompatActivity {
     public void register(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
         intent.putExtra("SECRET_KEY", SECRET_KEY);
+        startActivity(intent);
+    }
+
+    public void MainMenu() {
+        Intent intent = new Intent(this, User.class);
         startActivity(intent);
     }
 
