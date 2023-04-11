@@ -18,4 +18,16 @@ public class User extends AppCompatActivity {
         Intent intent = new Intent(this, TrackerActivity.class);
         startActivity(intent);
     }
+
+    public void Profile(View view) {
+    }
+
+    public void History(View view) {
+    }
+
+    public void Create(View view) {
+    }
+
+    public void SignOut(View view) {
+    }
 }
