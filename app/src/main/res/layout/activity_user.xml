@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".User"
+        tools:context=".UserMenu"
         android:id="@+id/rootRL"
         android:background="@drawable/vitorlas01" >
 
@@ -27,6 +27,7 @@
         android:onClick="Profile"
         android:text="Profil"
         android:layout_marginTop="50dp"
+        android:backgroundTint="#03A89E"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/menuTextView"/>
@@ -38,6 +39,7 @@
         android:text="Előzmény"
         android:onClick="History"
         android:layout_marginTop="50dp"
+        android:backgroundTint="#03A89E"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/Profile" />
@@ -49,6 +51,7 @@
         android:text="Edzés"
         android:onClick="Tracker"
         android:layout_marginTop="50dp"
+        android:backgroundTint="#03A89E"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/History" />
@@ -60,6 +63,7 @@
         android:text="Edzés Készités"
         android:onClick="Create"
         android:layout_marginTop="50dp"
+        android:backgroundTint="#03A89E"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/Training" />
@@ -71,6 +75,7 @@
         android:text="Kijelentkezés"
         android:onClick="SignOut"
         android:layout_marginTop="50dp"
+        android:backgroundTint="#03A89E"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/Create" />

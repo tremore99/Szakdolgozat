@@ -72,7 +72,6 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Sikeres bejelentkezés", Toast.LENGTH_LONG).show();
                     MainMenu();
                 } else {
-                    Log.d(LOG_TAG, "User wasn't signed in");
                     Toast.makeText(LoginActivity.this, "Sikertelen bejelentkezés", Toast.LENGTH_LONG).show();
                 }
             }
@@ -91,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void MainMenu() {
-        Intent intent = new Intent(this, User.class);
+        Intent intent = new Intent(this, UserMenu.class);
         startActivity(intent);
     }
 

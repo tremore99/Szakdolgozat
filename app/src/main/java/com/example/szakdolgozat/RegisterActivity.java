@@ -11,10 +11,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.szakdolgozat.Object.UserLayout;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RegisterActivity extends AppCompatActivity {
     private static final String LOG_TAG = RegisterActivity.class.getName();
@@ -27,6 +30,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private SharedPreferences preferences;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore mStore;
+    private CollectionReference mItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,8 @@ public class RegisterActivity extends AppCompatActivity {
         userPasswordAgainEditText.setText(password);
 
         mAuth = FirebaseAuth.getInstance();
+        mStore = FirebaseFirestore.getInstance();
+        mItems = mStore.collection("users");
 
         Log.i(LOG_TAG, "onCreate");
     }
@@ -66,20 +73,20 @@ public class RegisterActivity extends AppCompatActivity {
         String passwordAgain = userPasswordAgainEditText.getText().toString();
 
         if (!password.equals(passwordAgain)) {
-            Log.e(LOG_TAG, "Nem egyenlő a jelsző és a megerősitése");
+            Toast.makeText(RegisterActivity.this, "A két jelszó nem egyezik meg", Toast.LENGTH_LONG).show();
         }
 
         mAuth.createUserWithEmailAndPassword(userEmail, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.i(LOG_TAG, "itt vagyok");
                 if (task.isSuccessful()) {
                     Log.d(LOG_TAG, "User created successfully");
-                    Toast.makeText(RegisterActivity.this, "User was created successfully", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this, "Felhasználó sikeresen létrehozva", Toast.LENGTH_LONG).show();
+                    mItems.add(new UserLayout(userEmail, password, userName));
                     MainMenu();
                 } else {
                     Log.d(LOG_TAG, "User wasnt created");
-                    Toast.makeText(RegisterActivity.this, "User wasn't created successfully: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this, "Felhasználó létrehozása sikertelen" /*+ task.getException().getMessage()*/, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -92,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void MainMenu() {
-        Intent intent = new Intent(this, User.class);
+        Intent intent = new Intent(this, UserMenu.class);
         startActivity(intent);
     }
 

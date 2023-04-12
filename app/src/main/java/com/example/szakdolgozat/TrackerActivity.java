@@ -11,10 +11,13 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.szakdolgozat.Object.Track;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -22,10 +25,18 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.szakdolgozat.databinding.ActivityTrackerBinding;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class TrackerActivity extends FragmentActivity implements OnMapReadyCallback {
+    private static final String LOG_TAG = RegisterActivity.class.getName();
 
     private GoogleMap mMap;
     private ActivityTrackerBinding binding;
@@ -34,10 +45,17 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
 
     private LocationListener locationListener;
 
+    private List<LatLng> utvonal;
+
     private final long MinTime = 1000; // 1 second
     private final long MinDistance = 5; // 5 meters
 
     private LatLng latLng;
+    private LocalDate Date;
+
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore mStore;
+    private CollectionReference mItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +71,10 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PackageManager.PERMISSION_GRANTED);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PackageManager.PERMISSION_GRANTED);
+
+        mAuth = FirebaseAuth.getInstance();
+        mStore = FirebaseFirestore.getInstance();
+        mItems = mStore.collection("Tracks");
 
         startStopButton = findViewById(R.id.start_stop_button);
         startStopButton.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +99,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         PolylineOptions lineOptions = new PolylineOptions();
         lineOptions.color(Color.RED);
         lineOptions.width(5);
+        utvonal = new ArrayList<>();
 
         // Get last known location and center the map on it
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -100,6 +123,8 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
                     lineOptions.add(latLng);
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
                     mMap.addPolyline(lineOptions);
+                    utvonal.add(latLng);
+                    Log.i(LOG_TAG, "Mostani helyzeted: " + latLng);
                 } catch (SecurityException e) {
                     e.printStackTrace();
                 }
@@ -122,6 +147,9 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         // Unregister the LocationListener
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.removeUpdates(locationListener);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mItems.add(new Track(mAuth.getCurrentUser().toString(), utvonal, System.currentTimeMillis()));
+        }
     }
 
 }
