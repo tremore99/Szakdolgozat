@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.szakdolgozat">
+    package="com.example.szakdolgozat" >
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -16,28 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Szakdolgozat"
-        tools:targetApi="31">
-        <activity
-            android:name=".TrainingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CreateTrainingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CurrentHistory"
-            android:exported="false" />
-        <activity
-            android:name=".HistoryMenuActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
+        tools:targetApi="31" >
+
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -54,6 +34,28 @@
             android:value="AIzaSyDaVud_iLc4mp_4CcJNdVF10MNgNibNNXw" />
 
         <activity
+            android:name=".CurrentHistory"
+            android:exported="false"
+            android:label="@string/title_activity_current_history" />
+        <activity
+            android:name=".TrainingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateTrainingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HistoryMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".TrackerActivity"
             android:exported="false"
             android:label="@string/title_activity_tracker" />
@@ -62,7 +64,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

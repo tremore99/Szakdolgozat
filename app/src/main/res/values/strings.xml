@@ -5,4 +5,5 @@
     <string name="trainer">Edző</string>
     <string name="send">Küldés</string>
     <string name="title_activity_tracker">TrackerActivity</string>
+    <string name="title_activity_current_history">CurrentHistory</string>
 </resources>

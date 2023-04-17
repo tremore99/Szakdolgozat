@@ -147,9 +147,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         // Unregister the LocationListener
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.removeUpdates(locationListener);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mItems.add(new Track(mAuth.getCurrentUser().toString(), utvonal, System.currentTimeMillis()));
-        }
+        mItems.add(new Track(mAuth.getCurrentUser().toString(), utvonal, System.currentTimeMillis()));
     }
 
 }

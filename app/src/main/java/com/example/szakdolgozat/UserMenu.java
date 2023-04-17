@@ -30,7 +30,8 @@ public class UserMenu extends AppCompatActivity {
     }
 
     public void History(View view) {
-        Intent intent = new Intent(this, HistoryMenuActivity.class);
+        //Intent intent = new Intent(this, HistoryMenuActivity.class);
+        Intent intent = new Intent(this, CurrentHistory.class);
         startActivity(intent);
     }
 
