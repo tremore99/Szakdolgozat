@@ -66,6 +66,8 @@ public class CurrentHistory extends FragmentActivity implements OnMapReadyCallba
 
         mAuth = FirebaseAuth.getInstance();
         mStore = FirebaseFirestore.getInstance();
+
+        //TODO a documentPathet át kell majd irni
         track = mStore.collection("Tracks").document("70zqed0ohsEJxB4bN2Q0");
 
         track.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -111,6 +113,8 @@ public class CurrentHistory extends FragmentActivity implements OnMapReadyCallba
         lineOptions.color(Color.RED);
         lineOptions.width(5);
         LatLng latLng;
+        LatLng first = null;
+        LatLng last = null;
 
         Log.i("LOGGED", currentTrack.get(0).values().toString());
 
@@ -118,7 +122,16 @@ public class CurrentHistory extends FragmentActivity implements OnMapReadyCallba
             Double[] a = (Double[])(currentTrack.get(i).values().toArray(new Double[currentTrack.get(i).size()]));
             latLng = new LatLng(a[0], a[1]);
             lineOptions.add(latLng);
+            if (i == 0) {
+                first = new LatLng(a[0], a[1]);
+            } else if (i == currentTrack.size()) {
+                last = new LatLng(a[0], a[1]);
+            }
         }
+
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(first, 16.0f));
+        mMap.addMarker(new MarkerOptions().position(first));
+        mMap.addMarker(new MarkerOptions().position(last));
 
         mMap.addPolyline(lineOptions);
     }

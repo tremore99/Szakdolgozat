@@ -1,9 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/profile"
+        android:text="Profil"
+        android:textSize="36dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/username"
+        android:text="username"
+        android:textSize="36dp"
+        android:layout_marginTop="50dp"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile"/>
+
+    <EditText
+        android:id="@+id/userEmail"
+        android:text="email"
+        android:textSize="36dp"
+        android:inputType="textEmailAddress"
+        android:layout_marginTop="50dp"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username"/>
+
+    <Button
+        android:id="@+id/Change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Szerkesztés"
+        android:onClick="update"
+        android:layout_below="@id/userEmail"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Mégse"
+        android:onClick="cancel"
+        android:layout_below="@+id/Change"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

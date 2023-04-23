@@ -10,10 +10,13 @@ public class Track {
     private List<LatLng> track;
     private Long date;
 
-    public Track(String userId, List<LatLng> track, Long date) {
+    private Double distance;
+
+    public Track(String userId, List<LatLng> track, Long date, Double distance) {
         this.userId = userId;
         this.track = track;
         this.date = date;
+        this.distance = distance;
     }
 
     public String getUserId() {
@@ -38,5 +41,13 @@ public class Track {
 
     public void setDate(Long date) {
         this.date = date;
+    }
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
     }
 }

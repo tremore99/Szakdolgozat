@@ -74,23 +74,22 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (!password.equals(passwordAgain)) {
             Toast.makeText(RegisterActivity.this, "A két jelszó nem egyezik meg", Toast.LENGTH_LONG).show();
-        }
-
-        mAuth.createUserWithEmailAndPassword(userEmail, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    Log.d(LOG_TAG, "User created successfully");
-                    Toast.makeText(RegisterActivity.this, "Felhasználó sikeresen létrehozva", Toast.LENGTH_LONG).show();
-                    mItems.add(new UserLayout(userEmail, password, userName));
-                    MainMenu();
-                } else {
-                    Log.d(LOG_TAG, "User wasnt created");
-                    Toast.makeText(RegisterActivity.this, "Felhasználó létrehozása sikertelen" /*+ task.getException().getMessage()*/, Toast.LENGTH_LONG).show();
+        } else {
+            mAuth.createUserWithEmailAndPassword(userEmail, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        Log.d(LOG_TAG, "User created successfully");
+                        Toast.makeText(RegisterActivity.this, "Felhasználó sikeresen létrehozva", Toast.LENGTH_LONG).show();
+                        mItems.add(new UserLayout(userEmail, password, userName, mAuth.getCurrentUser().getUid()));
+                        MainMenu();
+                    } else {
+                        Log.d(LOG_TAG, "User wasnt created");
+                        Toast.makeText(RegisterActivity.this, "Felhasználó létrehozása sikertelen" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
-        });
-
+            });
+        }
         Log.i(LOG_TAG, "Regisztrált: " + userName + ", email: " + userEmail);
     }
 

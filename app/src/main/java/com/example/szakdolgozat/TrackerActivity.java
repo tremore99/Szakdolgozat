@@ -51,7 +51,11 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     private final long MinDistance = 5; // 5 meters
 
     private LatLng latLng;
-    private LocalDate Date;
+
+    private Double distance = 0.0;
+
+    private Location locationA;
+    private Location locationB;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore mStore;
@@ -133,6 +137,21 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         };
     }
 
+    private double calculateDistance() {
+        for (int i = 0; i < utvonal.size()-1; i++) {
+            locationA = new Location("point A");
+            locationA.setLatitude(utvonal.get(i).latitude);
+            locationA.setLongitude(utvonal.get(i).longitude);
+
+            locationB = new Location("point B");
+            locationB.setLatitude(utvonal.get(i+1).latitude);
+            locationB.setLongitude(utvonal.get(i+1).longitude);
+            distance += locationA.distanceTo(locationB);
+        }
+
+        return distance;
+    }
+
     private void startTrackingSession() {
         // Register the LocationListener
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -147,7 +166,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         // Unregister the LocationListener
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.removeUpdates(locationListener);
-        mItems.add(new Track(mAuth.getCurrentUser().toString(), utvonal, System.currentTimeMillis()));
+        mItems.add(new Track(mAuth.getCurrentUser().getUid(), utvonal, System.currentTimeMillis(), calculateDistance() / 1000));
     }
 
 }

@@ -5,10 +5,15 @@ public class UserLayout {
     private String password;
     private String username;
 
-    public UserLayout(String email, String password, String username) {
+    private String userUID;
+
+
+
+    public UserLayout(String email, String password, String username, String userUID) {
         this.email = email;
         this.password = password;
         this.username = username;
+        this.userUID = userUID;
     }
 
     public String getEmail() {return email;}
@@ -25,5 +30,13 @@ public class UserLayout {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getUserUID() {
+        return userUID;
+    }
+
+    public void setUserUID(String userUID) {
+        this.userUID = userUID;
     }
 }
