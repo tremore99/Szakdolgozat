@@ -38,13 +38,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        Bundle bundle = getIntent().getExtras();
-        int secret_key = bundle.getInt("SECRET_KEY");
-
-        if (secret_key != 99) {
-            finish();
-        }
-
         userNameEditText = findViewById(R.id.userNameEditText);
         userEmailEditText = findViewById(R.id.userEmailEditText);
         userPasswordEditText = findViewById(R.id.userPasswordEditText);

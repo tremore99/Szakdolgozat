@@ -74,8 +74,6 @@ public class ProfileActivity extends AppCompatActivity {
 
                         editUserName.setText(username);
                         editEmail.setText(email);
-                        Log.i("LOGGER", username);
-                        Log.i("LOGGER", email);
                     } else {
                         Log.e("LOGGER", "No such document");
                     }

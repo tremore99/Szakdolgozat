@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -48,11 +49,18 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     private List<LatLng> utvonal;
 
     private final long MinTime = 1000; // 1 second
-    private final long MinDistance = 5; // 5 meters
+    private final long MinDistance = 0; // 0 meters
 
     private LatLng latLng;
 
     private Double distance = 0.0;
+
+    private Double currentDistance = 0.0;
+
+    private Double currentSpeed = 0.0;
+    private Double allSpeed = 0.0;
+    private Double maxSpeed = 0.0;
+    private Double avgSpeed = 0.0;
 
     private Location locationA;
     private Location locationB;
@@ -112,7 +120,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
             if (location != null) {
                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16.0f));
-                mMap.addMarker(new MarkerOptions().position(latLng));
+                mMap.addMarker(new MarkerOptions().position(latLng).title("Itt vagy"));
             }
         } catch (SecurityException e) {
             e.printStackTrace();
@@ -147,8 +155,14 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
             locationB.setLatitude(utvonal.get(i+1).latitude);
             locationB.setLongitude(utvonal.get(i+1).longitude);
             distance += locationA.distanceTo(locationB);
+            currentDistance = Double.valueOf(locationA.distanceTo(locationB));
+            currentSpeed = (currentDistance * 1000) / (MinTime * 360);
+            allSpeed += currentSpeed;
+            if (currentSpeed > maxSpeed) {
+                maxSpeed = currentSpeed;
+            }
         }
-
+        avgSpeed = allSpeed / utvonal.size()-1;
         return distance;
     }
 
@@ -167,6 +181,42 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.removeUpdates(locationListener);
         mItems.add(new Track(mAuth.getCurrentUser().getUid(), utvonal, System.currentTimeMillis(), calculateDistance() / 1000));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i(LOG_TAG, "onStart");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i(LOG_TAG, "onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(LOG_TAG, "onDestroy");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(LOG_TAG, "onResume");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(LOG_TAG, "onRestart");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(LOG_TAG, "onPause");
     }
 
 }

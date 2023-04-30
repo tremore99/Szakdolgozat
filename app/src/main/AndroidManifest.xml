@@ -36,34 +36,44 @@
         <activity
             android:name=".CurrentHistory"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_current_history" />
         <activity
             android:name=".TrainingActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".CreateTrainingActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".HistoryMenuActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ProfileActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".TrackerActivity"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:label="@string/title_activity_tracker" />
         <activity
             android:name=".UserMenu"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

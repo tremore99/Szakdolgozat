@@ -9,14 +9,33 @@ public class Track {
     private String userId;
     private List<LatLng> track;
     private Long date;
-
     private Double distance;
+    private Double maxSpeed;
+    private Double avgSpeed;
 
-    public Track(String userId, List<LatLng> track, Long date, Double distance) {
+    public Track(String userId, List<LatLng> track, Long date, Double distance, Double maxSpeed, Double avgSpeed) {
         this.userId = userId;
         this.track = track;
         this.date = date;
         this.distance = distance;
+        this.avgSpeed = avgSpeed;
+        this.maxSpeed = maxSpeed;
+    }
+
+    public Double getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    public void setMaxSpeed(Double maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
+
+    public Double getAvgSpeed() {
+        return avgSpeed;
+    }
+
+    public void setAvgSpeed(Double avgSpeed) {
+        this.avgSpeed = avgSpeed;
     }
 
     public String getUserId() {

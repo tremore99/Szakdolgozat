@@ -13,6 +13,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.szakdolgozat.Object.Track;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -38,9 +39,9 @@ import java.util.Map;
 public class CurrentHistory extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+
     private ActivityCurrentHistoryBinding binding;
 
-    private FirebaseAuth mAuth;
     private FirebaseFirestore mStore;
 
     private DocumentReference track;
@@ -64,11 +65,12 @@ public class CurrentHistory extends FragmentActivity implements OnMapReadyCallba
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PackageManager.PERMISSION_GRANTED);
 
 
-        mAuth = FirebaseAuth.getInstance();
+        Bundle bundle = getIntent().getExtras();
+        String secret_key = bundle.getString("Document_id");
+
         mStore = FirebaseFirestore.getInstance();
 
-        //TODO a documentPathet át kell majd irni
-        track = mStore.collection("Tracks").document("70zqed0ohsEJxB4bN2Q0");
+        track = mStore.collection("Tracks").document(secret_key);
 
         track.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -93,19 +95,6 @@ public class CurrentHistory extends FragmentActivity implements OnMapReadyCallba
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Get last known location and center the map on it
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        try {
-            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (location != null) {
-                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16.0f));
-                mMap.addMarker(new MarkerOptions().position(latLng));
-            }
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        }
     }
 
     public void draw() {
@@ -116,7 +105,10 @@ public class CurrentHistory extends FragmentActivity implements OnMapReadyCallba
         LatLng first = null;
         LatLng last = null;
 
-        Log.i("LOGGED", currentTrack.get(0).values().toString());
+        if (currentTrack.size() == 0) {
+            Toast.makeText(CurrentHistory.this, "Nincs semmilyen utvonal", Toast.LENGTH_LONG).show();
+            finish();
+        }
 
         for (int i = 0; i < currentTrack.size(); i++) {
             Double[] a = (Double[])(currentTrack.get(i).values().toArray(new Double[currentTrack.get(i).size()]));
@@ -124,14 +116,18 @@ public class CurrentHistory extends FragmentActivity implements OnMapReadyCallba
             lineOptions.add(latLng);
             if (i == 0) {
                 first = new LatLng(a[0], a[1]);
-            } else if (i == currentTrack.size()) {
+            } else if (i == currentTrack.size()-1) {
                 last = new LatLng(a[0], a[1]);
             }
         }
 
+        if (currentTrack.size() == 1) {
+            last = first;
+        }
+
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(first, 16.0f));
-        mMap.addMarker(new MarkerOptions().position(first));
-        mMap.addMarker(new MarkerOptions().position(last));
+        mMap.addMarker(new MarkerOptions().position(first).title("Start"));
+        mMap.addMarker(new MarkerOptions().position(last).title("Cél"));
 
         mMap.addPolyline(lineOptions);
     }
