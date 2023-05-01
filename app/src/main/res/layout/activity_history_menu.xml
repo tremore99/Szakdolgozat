@@ -12,8 +12,7 @@
     <ListView
         android:id="@+id/valami"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
+        android:layout_height="wrap_content"
+        android:dividerHeight="16dp">
     </ListView>
 </LinearLayout>

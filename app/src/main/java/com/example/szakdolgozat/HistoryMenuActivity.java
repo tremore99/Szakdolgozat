@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -122,12 +120,11 @@ public class HistoryMenuActivity extends AppCompatActivity {
                 // Az egyes CardView elemekben található TextView elemek beállítása
                 TextView textView1 = view.findViewById(R.id.trackDate);
                 TextView textView2 = view.findViewById(R.id.trackDistance);
-                Button button = view.findViewById(R.id.track);
 
-                button.setOnClickListener(new View.OnClickListener() {
+                view.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(HistoryMenuActivity.this, CurrentHistory.class);
+                    public void onClick(View v) {
+                        Intent intent = new Intent(HistoryMenuActivity.this, CurrentHistoryActivity.class);
                         intent.putExtra("Document_id", trackDocumentId.get(position));
                         startActivity(intent);
                     }
@@ -143,3 +140,4 @@ public class HistoryMenuActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 }
+

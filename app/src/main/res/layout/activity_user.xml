@@ -48,13 +48,13 @@
         android:id="@+id/Training"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edzés"
-        android:onClick="Tracker"
-        android:layout_marginTop="50dp"
-        android:backgroundTint="#03A89E"
+        android:layout_below="@id/History"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/History" />
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#03A89E"
+        android:onClick="Tracker"
+        android:text="Edzés" />
 
     <Button
         android:id="@+id/Create"

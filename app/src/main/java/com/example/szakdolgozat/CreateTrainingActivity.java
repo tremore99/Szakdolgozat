@@ -47,7 +47,6 @@ public class CreateTrainingActivity extends AppCompatActivity {
         }
         String saltStr = salt.toString();
         return saltStr;
-
     }
 
     public void Generate(View view) {

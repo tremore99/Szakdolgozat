@@ -145,7 +145,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         };
     }
 
-    private double calculateDistance() {
+    private void calculateDistance() {
         for (int i = 0; i < utvonal.size()-1; i++) {
             locationA = new Location("point A");
             locationA.setLatitude(utvonal.get(i).latitude);
@@ -155,6 +155,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
             locationB.setLatitude(utvonal.get(i+1).latitude);
             locationB.setLongitude(utvonal.get(i+1).longitude);
             distance += locationA.distanceTo(locationB);
+
             currentDistance = Double.valueOf(locationA.distanceTo(locationB));
             currentSpeed = (currentDistance * 1000) / (MinTime * 360);
             allSpeed += currentSpeed;
@@ -163,7 +164,6 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
             }
         }
         avgSpeed = allSpeed / utvonal.size()-1;
-        return distance;
     }
 
     private void startTrackingSession() {
@@ -180,7 +180,8 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         // Unregister the LocationListener
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.removeUpdates(locationListener);
-        mItems.add(new Track(mAuth.getCurrentUser().getUid(), utvonal, System.currentTimeMillis(), calculateDistance() / 1000));
+        calculateDistance();
+        mItems.add(new Track(mAuth.getCurrentUser().getUid(), utvonal, System.currentTimeMillis(), distance / 1000, avgSpeed, maxSpeed));
     }
 
     @Override
