@@ -23,6 +23,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.szakdolgozat.databinding.ActivityTrackerBinding;
@@ -30,6 +31,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.checkerframework.checker.units.qual.C;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -48,7 +51,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
 
     private List<LatLng> utvonal;
 
-    private final long MinTime = 1000; // 1 second
+    private final long MinTime = 5000; // 5 second
     private final long MinDistance = 0; // 0 meters
 
     private LatLng latLng;
@@ -57,10 +60,10 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
 
     private Double currentDistance = 0.0;
 
-    private Double currentSpeed = 0.0;
-    private Double allSpeed = 0.0;
-    private Double maxSpeed = 0.0;
-    private Double avgSpeed = 0.0;
+    private Double currentSpeed;
+    private Double allSpeed;
+    private Double maxSpeed;
+    private Double avgSpeed;
 
     private Location locationA;
     private Location locationB;
@@ -68,6 +71,8 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     private FirebaseAuth mAuth;
     private FirebaseFirestore mStore;
     private CollectionReference mItems;
+
+    private String Track_Code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +92,9 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         mAuth = FirebaseAuth.getInstance();
         mStore = FirebaseFirestore.getInstance();
         mItems = mStore.collection("Tracks");
+
+        Bundle bundle = getIntent().getExtras();
+        Track_Code = bundle.getString("Track_code");
 
         startStopButton = findViewById(R.id.start_stop_button);
         startStopButton.setOnClickListener(new View.OnClickListener() {
@@ -133,37 +141,45 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
                 try {
                     latLng = new LatLng(location.getLatitude(), location.getLongitude());
                     lineOptions.add(latLng);
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+                    float bearing = location.getBearing();
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).bearing(bearing).tilt(45).zoom(45).build();
+                    mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                     mMap.addPolyline(lineOptions);
                     utvonal.add(latLng);
                     Log.i(LOG_TAG, "Mostani helyzeted: " + latLng);
                 } catch (SecurityException e) {
                     e.printStackTrace();
                 }
-
             }
         };
     }
 
     private void calculateDistance() {
-        for (int i = 0; i < utvonal.size()-1; i++) {
-            locationA = new Location("point A");
-            locationA.setLatitude(utvonal.get(i).latitude);
-            locationA.setLongitude(utvonal.get(i).longitude);
+        maxSpeed = 0.0;
+        avgSpeed = 0.0;
+        currentSpeed = 0.0;
+        allSpeed = 0.0;
+        if (utvonal.size() > 1) {
+            for (int i = 0; i < utvonal.size()-1; i++) {
+                locationA = new Location("point A");
+                locationA.setLatitude(utvonal.get(i).latitude);
+                locationA.setLongitude(utvonal.get(i).longitude);
 
-            locationB = new Location("point B");
-            locationB.setLatitude(utvonal.get(i+1).latitude);
-            locationB.setLongitude(utvonal.get(i+1).longitude);
-            distance += locationA.distanceTo(locationB);
+                locationB = new Location("point B");
+                locationB.setLatitude(utvonal.get(i+1).latitude);
+                locationB.setLongitude(utvonal.get(i+1).longitude);
+                distance += locationA.distanceTo(locationB);
 
-            currentDistance = Double.valueOf(locationA.distanceTo(locationB));
-            currentSpeed = (currentDistance * 1000) / (MinTime * 360);
-            allSpeed += currentSpeed;
-            if (currentSpeed > maxSpeed) {
-                maxSpeed = currentSpeed;
+                currentDistance = Double.valueOf(locationA.distanceTo(locationB));
+                currentSpeed = ((currentDistance / (MinTime/1000)) * 3.6);
+                allSpeed += currentSpeed;
+
+                if (currentSpeed > maxSpeed) {
+                    maxSpeed = currentSpeed;
+                }
             }
+            avgSpeed = allSpeed / (utvonal.size()-1);
         }
-        avgSpeed = allSpeed / utvonal.size()-1;
     }
 
     private void startTrackingSession() {
@@ -181,7 +197,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.removeUpdates(locationListener);
         calculateDistance();
-        mItems.add(new Track(mAuth.getCurrentUser().getUid(), utvonal, System.currentTimeMillis(), distance / 1000, avgSpeed, maxSpeed));
+        mItems.add(new Track(mAuth.getCurrentUser().getUid(), utvonal, System.currentTimeMillis(), distance / 1000, avgSpeed, maxSpeed, Track_Code));
     }
 
     @Override

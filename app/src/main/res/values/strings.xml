@@ -6,4 +6,5 @@
     <string name="send">Küldés</string>
     <string name="title_activity_tracker">TrackerActivity</string>
     <string name="title_activity_current_history">CurrentHistory</string>
+    <string name="title_activity_team_current_history">TeamCurrentHistory</string>
 </resources>

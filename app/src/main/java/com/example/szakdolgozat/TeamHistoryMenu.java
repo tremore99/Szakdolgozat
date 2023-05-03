@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,31 +28,32 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class HistoryMenuActivity extends AppCompatActivity {
+public class TeamHistoryMenu extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore mStore;
 
-    private List<Date> trackDateList;
-
-    private List<Double> trackDistanceList;
-
-    private List<String> trackDocumentId;
+    private ListView listView;
 
     private Date currentDate;
 
-    private ListView listView;
+    private List<String> trackDocumentId;
+
+    private List<Date> trackDateList;
+
+    private List<String> trackCodeList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history_menu);
+        setContentView(R.layout.activity_team_history_menu);
 
         mAuth = FirebaseAuth.getInstance();
         mStore = FirebaseFirestore.getInstance();
 
         trackDateList = new ArrayList<>();
-        trackDistanceList = new ArrayList<>();
+        trackCodeList = new ArrayList<>();
         trackDocumentId = new ArrayList<>();
 
         mStore.collection("Tracks")
@@ -74,7 +74,7 @@ public class HistoryMenuActivity extends AppCompatActivity {
                         }
                     }
                 });
-        listView = findViewById(R.id.valami);
+        listView = findViewById(R.id.listView);
     }
 
     private void nextToDraw(int i) {
@@ -87,13 +87,12 @@ public class HistoryMenuActivity extends AppCompatActivity {
                         if (document != null) {
                             currentDate = new Date((Long)document.get("date"));
                             trackDateList.add(currentDate);
-                            trackDistanceList.add((Double) document.get("distance"));
+                            trackCodeList.add((String) document.get("trackCode"));
                             draw();
                             nextToDraw(i+1);
                         } else {
                             Log.e("LOGGER", "No such document");
                         }
-
                     } else {
                         Log.e("LOGGER", "get failed with: " + task.getException());
                     }
@@ -102,32 +101,30 @@ public class HistoryMenuActivity extends AppCompatActivity {
         }
     }
 
-
     private void draw() {
-        ArrayAdapter<Date> adapter = new ArrayAdapter<Date>(this, R.layout.historycardview, R.id.trackDate, trackDateList) {
+        ArrayAdapter<Date> adapter = new ArrayAdapter<Date>(this, R.layout.teamhistorycardview, R.id.trackDate, trackDateList) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
 
-                DecimalFormat df = new DecimalFormat("#.##");
                 DateFormat dateFormat = new SimpleDateFormat("dd.MMMM.yyyy");
 
                 // Az egyes CardView elemekben található TextView elemek beállítása
                 TextView textView1 = view.findViewById(R.id.trackDate);
-                TextView textView2 = view.findViewById(R.id.trackDistance);
+                TextView textView2 = view.findViewById(R.id.trackCode);
 
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(HistoryMenuActivity.this, CurrentHistoryActivity.class);
-                        intent.putExtra("Document_id", trackDocumentId.get(position));
+                        Intent intent = new Intent(TeamHistoryMenu.this, TeamCurrentHistory.class);
+                        intent.putExtra("document_code", trackCodeList.get(position));
                         startActivity(intent);
                     }
                 });
 
                 // Az adatok beállítása a TextView elemekbe
                 textView1.setText(dateFormat.format(trackDateList.get(position)));
-                textView2.setText(df.format(trackDistanceList.get(position)) + "km"); // Itt beállíthatod a második TextView elem szövegét
+                textView2.setText(trackCodeList.get(position)); // Itt beállíthatod a második TextView elem szövegét
 
                 return view;
             }
@@ -135,4 +132,3 @@ public class HistoryMenuActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 }
-

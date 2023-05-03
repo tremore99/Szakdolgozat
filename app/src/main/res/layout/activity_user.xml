@@ -45,10 +45,22 @@
         android:layout_below="@id/Profile" />
 
     <Button
+        android:id="@+id/teamHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Csapat előzmény"
+        android:onClick="teamHistory"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#03A89E"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/History" />
+
+    <Button
         android:id="@+id/Training"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/History"
+        android:layout_below="@id/teamHistory"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="50dp"

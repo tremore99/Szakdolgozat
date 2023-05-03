@@ -10,16 +10,26 @@ public class Track {
     private List<LatLng> track;
     private Long date;
     private Double distance;
-    private Double maxSpeed;
     private Double avgSpeed;
+    private Double maxSpeed;
+    private String trackCode;
 
-    public Track(String userId, List<LatLng> track, Long date, Double distance, Double maxSpeed, Double avgSpeed) {
+    public Track(String userId, List<LatLng> track, Long date, Double distance, Double avgSpeed, Double maxSpeed, String trackCode) {
         this.userId = userId;
         this.track = track;
         this.date = date;
         this.distance = distance;
         this.avgSpeed = avgSpeed;
         this.maxSpeed = maxSpeed;
+        this.trackCode = trackCode;
+    }
+
+    public String getTrackCode() {
+        return trackCode;
+    }
+
+    public void setTrackCode(String trackCode) {
+        this.trackCode = trackCode;
     }
 
     public Double getMaxSpeed() {

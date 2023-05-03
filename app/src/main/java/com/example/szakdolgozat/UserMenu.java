@@ -19,8 +19,7 @@ public class UserMenu extends AppCompatActivity {
     }
 
     public void Tracker(View view) {
-        // Intent intent = new Intent(this, TrainingActivity.class);
-        Intent intent = new Intent(this, TrackerActivity.class);
+        Intent intent = new Intent(this, TrainingActivity.class);
         startActivity(intent);
     }
 
@@ -44,5 +43,10 @@ public class UserMenu extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
         startActivity(intent);
         finish();
+    }
+
+    public void teamHistory(View view) {
+        Intent intent = new Intent(this, TeamHistoryMenu.class);
+        startActivity(intent);
     }
 }

@@ -31,6 +31,7 @@ tools:context=".TrackerActivity">
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
+        android:backgroundTint="#03A89E"
         android:text="Edzés elkezdése" />
 
 </RelativeLayout>

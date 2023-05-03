@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/vitorlas01"
     tools:context=".CreateTrainingActivity">
 
     <EditText
@@ -25,6 +26,7 @@
         android:textSize="24dp"
         android:onClick="Create"
         android:layout_marginTop="50dp"
+        android:backgroundTint="#03A89E"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/GeneratedCode"/>
 
@@ -36,6 +38,7 @@
         android:text="Generálás"
         android:onClick="Generate"
         android:layout_marginTop="50dp"
+        android:backgroundTint="#03A89E"
         android:textSize="24dp"
         android:layout_below="@id/Create"/>
 
@@ -45,6 +48,7 @@
         android:layout_height="wrap_content"
         android:text="Mégse"
         android:textSize="24dp"
+        android:backgroundTint="#03A89E"
         android:layout_below="@+id/CodeGenerator"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"

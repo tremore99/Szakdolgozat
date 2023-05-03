@@ -25,7 +25,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:text="Edzés elkezdése"
-        android:textSize="24dp"/>
+        android:backgroundTint="#03A89E"
+        android:textSize="24dp"
+        android:onClick="confirm"/>
 
     <Button
         android:id="@+id/cancel"
@@ -33,8 +35,10 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/confirm"
+        android:backgroundTint="#03A89E"
         android:layout_marginTop="50dp"
         android:text="Mégse"
-        android:textSize="24dp"/>
+        android:textSize="24dp"
+        android:onClick="cancel"/>
 
 </RelativeLayout>
