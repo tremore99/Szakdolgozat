@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -85,11 +84,11 @@ public class HistoryMenuActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document != null) {
-                            currentDate = new Date((Long)document.get("date"));
+                            currentDate = new Date((Long) document.get("date"));
                             trackDateList.add(currentDate);
                             trackDistanceList.add((Double) document.get("distance"));
                             draw();
-                            nextToDraw(i+1);
+                            nextToDraw(i + 1);
                         } else {
                             Log.e("LOGGER", "No such document");
                         }
@@ -112,7 +111,6 @@ public class HistoryMenuActivity extends AppCompatActivity {
                 DecimalFormat df = new DecimalFormat("#.##");
                 DateFormat dateFormat = new SimpleDateFormat("dd.MMMM.yyyy");
 
-                // Az egyes CardView elemekben található TextView elemek beállítása
                 TextView textView1 = view.findViewById(R.id.trackDate);
                 TextView textView2 = view.findViewById(R.id.trackDistance);
 
@@ -125,9 +123,8 @@ public class HistoryMenuActivity extends AppCompatActivity {
                     }
                 });
 
-                // Az adatok beállítása a TextView elemekbe
                 textView1.setText(dateFormat.format(trackDateList.get(position)));
-                textView2.setText(df.format(trackDistanceList.get(position)) + "km"); // Itt beállíthatod a második TextView elem szövegét
+                textView2.setText(df.format(trackDistanceList.get(position)) + "km");
 
                 return view;
             }
@@ -135,4 +132,3 @@ public class HistoryMenuActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 }
-

@@ -6,13 +6,11 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,9 +30,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.checkerframework.checker.units.qual.C;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,7 +76,6 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         binding = ActivityTrackerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -121,7 +115,6 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         lineOptions.width(5);
         utvonal = new ArrayList<>();
 
-        // Get last known location and center the map on it
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         try {
             Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -160,30 +153,29 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         currentSpeed = 0.0;
         allSpeed = 0.0;
         if (utvonal.size() > 1) {
-            for (int i = 0; i < utvonal.size()-1; i++) {
+            for (int i = 0; i < utvonal.size() - 1; i++) {
                 locationA = new Location("point A");
                 locationA.setLatitude(utvonal.get(i).latitude);
                 locationA.setLongitude(utvonal.get(i).longitude);
 
                 locationB = new Location("point B");
-                locationB.setLatitude(utvonal.get(i+1).latitude);
-                locationB.setLongitude(utvonal.get(i+1).longitude);
+                locationB.setLatitude(utvonal.get(i + 1).latitude);
+                locationB.setLongitude(utvonal.get(i + 1).longitude);
                 distance += locationA.distanceTo(locationB);
 
                 currentDistance = Double.valueOf(locationA.distanceTo(locationB));
-                currentSpeed = ((currentDistance / (MinTime/1000)) * 3.6);
+                currentSpeed = ((currentDistance / (MinTime / 1000)) * 3.6);
                 allSpeed += currentSpeed;
 
                 if (currentSpeed > maxSpeed) {
                     maxSpeed = currentSpeed;
                 }
             }
-            avgSpeed = allSpeed / (utvonal.size()-1);
+            avgSpeed = allSpeed / (utvonal.size() - 1);
         }
     }
 
     private void startTrackingSession() {
-        // Register the LocationListener
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         try {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MinTime, MinDistance, locationListener);
@@ -193,47 +185,9 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     private void stopTrackingSession() {
-        // Unregister the LocationListener
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.removeUpdates(locationListener);
         calculateDistance();
         mItems.add(new Track(mAuth.getCurrentUser().getUid(), utvonal, System.currentTimeMillis(), distance / 1000, avgSpeed, maxSpeed, Track_Code));
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.i(LOG_TAG, "onStart");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.i(LOG_TAG, "onStop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i(LOG_TAG, "onDestroy");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i(LOG_TAG, "onResume");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.i(LOG_TAG, "onRestart");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.i(LOG_TAG, "onPause");
-    }
-
 }

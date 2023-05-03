@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.szakdolgozat.Object.UserLayout;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -92,5 +93,6 @@ public class ProfileActivity extends AppCompatActivity {
         user.update("username", editUserName.getText().toString());
         user.update("email", editEmail.getText().toString());
         mAuth.getCurrentUser().updateEmail(editEmail.getText().toString());
+        Toast.makeText(ProfileActivity.this, "Felhasználó sikeresen frissitve", Toast.LENGTH_LONG).show();
     }
 }

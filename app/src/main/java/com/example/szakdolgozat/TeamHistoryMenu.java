@@ -22,7 +22,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -85,11 +84,11 @@ public class TeamHistoryMenu extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document != null) {
-                            currentDate = new Date((Long)document.get("date"));
+                            currentDate = new Date((Long) document.get("date"));
                             trackDateList.add(currentDate);
                             trackCodeList.add((String) document.get("trackCode"));
                             draw();
-                            nextToDraw(i+1);
+                            nextToDraw(i + 1);
                         } else {
                             Log.e("LOGGER", "No such document");
                         }
@@ -109,7 +108,6 @@ public class TeamHistoryMenu extends AppCompatActivity {
 
                 DateFormat dateFormat = new SimpleDateFormat("dd.MMMM.yyyy");
 
-                // Az egyes CardView elemekben található TextView elemek beállítása
                 TextView textView1 = view.findViewById(R.id.trackDate);
                 TextView textView2 = view.findViewById(R.id.trackCode);
 
@@ -122,9 +120,8 @@ public class TeamHistoryMenu extends AppCompatActivity {
                     }
                 });
 
-                // Az adatok beállítása a TextView elemekbe
                 textView1.setText(dateFormat.format(trackDateList.get(position)));
-                textView2.setText(trackCodeList.get(position)); // Itt beállíthatod a második TextView elem szövegét
+                textView2.setText(trackCodeList.get(position));
 
                 return view;
             }

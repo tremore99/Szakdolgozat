@@ -2,11 +2,10 @@ package com.example.szakdolgozat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.szakdolgozat.Object.TrackCode;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,41 +59,7 @@ public class CreateTrainingActivity extends AppCompatActivity {
     public void Create(View view) {
         String code = mGeneratedCode.getText().toString();
         mCodes.add(new TrackCode(mAuth.getCurrentUser().getUid(), code));
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.i("LOGGER", "onStart");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.i("LOGGER", "onStop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i("LOGGER", "onDestroy");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i("LOGGER", "onResume");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.i("LOGGER", "onRestart");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.i("LOGGER", "onPause");
+        Toast.makeText(CreateTrainingActivity.this, "Sikeresen létrehoztad a kódot", Toast.LENGTH_LONG).show();
+        finish();
     }
 }

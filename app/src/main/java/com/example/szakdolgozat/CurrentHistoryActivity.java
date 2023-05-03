@@ -5,11 +5,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -25,8 +22,6 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,7 +29,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class CurrentHistoryActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -61,7 +55,6 @@ public class CurrentHistoryActivity extends FragmentActivity implements OnMapRea
         binding = ActivityCurrentHistoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -99,7 +92,6 @@ public class CurrentHistoryActivity extends FragmentActivity implements OnMapRea
                 }
             }
         });
-
     }
 
 
@@ -122,12 +114,12 @@ public class CurrentHistoryActivity extends FragmentActivity implements OnMapRea
         }
 
         for (int i = 0; i < currentTrack.size(); i++) {
-            Double[] a = (Double[])(currentTrack.get(i).values().toArray(new Double[currentTrack.get(i).size()]));
+            Double[] a = (Double[]) (currentTrack.get(i).values().toArray(new Double[currentTrack.get(i).size()]));
             latLng = new LatLng(a[0], a[1]);
             lineOptions.add(latLng);
             if (i == 0) {
                 first = new LatLng(a[0], a[1]);
-            } else if (i == currentTrack.size()-1) {
+            } else if (i == currentTrack.size() - 1) {
                 last = new LatLng(a[0], a[1]);
             }
         }
