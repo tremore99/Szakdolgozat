@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/vitorlas01"
+    tools:context=".LoginActivity">
+
+    <TextView
+        android:id="@+id/bejelentkezés"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="50dp"
+        android:text="Bejelentkezés"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="36sp" />
+
+    <EditText
+        android:id="@+id/userEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bejelentkezés"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginTop="50dp"
+        android:textColor="#fff"
+        android:layout_marginRight="@dimen/default_margin"
+        android:hint="E-mail cim"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/passwordEditText"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/userEditText"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginTop="50dp"
+        android:textColor="#fff"
+        android:layout_marginRight="@dimen/default_margin"
+        android:hint="Jelszó"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/Login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/passwordEditText"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#03A89E"
+        android:onClick="login"
+        android:text="Bejelentkezés" />
+
+    <Button
+        android:id="@+id/Register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Login"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#03A89E"
+        android:onClick="register"
+        android:text="Regisztráció" />
+
+    <Button
+        android:id="@+id/Back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Register"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#03A89E"
+        android:onClick="cancel"
+        android:text="Mégse" />
+
+</RelativeLayout>

@@ -1,3 +1,5 @@
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -5,8 +7,14 @@ pluginManagement {
         mavenCentral()
     }
 }
+
+/*
+You need to update the settings in settings.gradle and change
+repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS) to
+repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+ */
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         google()
         mavenCentral()
