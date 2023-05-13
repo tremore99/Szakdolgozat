@@ -16,7 +16,8 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:textAlignment="center"
-        android:textSize="36dp"/>
+        android:textSize="36dp"
+        android:textColor="#fff"/>
 
     <Button
         android:id="@+id/Create"

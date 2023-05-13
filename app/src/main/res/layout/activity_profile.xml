@@ -12,13 +12,16 @@
         android:id="@+id/profile"
         android:text="Profil"
         android:textSize="36dp"
+        android:layout_marginTop="50dp"
+        android:textColor="#fff"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <EditText
         android:id="@+id/username"
-        android:textSize="36dp"
+        android:textSize="24dp"
+        android:textColor="#fff"
         android:layout_marginTop="50dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
@@ -29,7 +32,8 @@
 
     <EditText
         android:id="@+id/userEmail"
-        android:textSize="36dp"
+        android:textSize="24dp"
+        android:textColor="#fff"
         android:inputType="textEmailAddress"
         android:layout_marginTop="50dp"
         android:layout_marginStart="15dp"

@@ -1,15 +1,12 @@
 package com.example.szakdolgozat.Object;
 
-public class UserLayout {
+public class User {
     private String email;
     private String password;
     private String username;
-
     private String userUID;
 
-
-
-    public UserLayout(String email, String password, String username, String userUID) {
+    public User(String email, String password, String username, String userUID) {
         this.email = email;
         this.password = password;
         this.username = username;

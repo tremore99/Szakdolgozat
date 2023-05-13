@@ -27,6 +27,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginTop="50dp"
+        android:textColor="#fff"
         android:layout_marginRight="@dimen/default_margin"
         android:hint="E-mail cim"
         android:inputType="textPersonName" />
@@ -40,6 +41,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginTop="50dp"
+        android:textColor="#fff"
         android:layout_marginRight="@dimen/default_margin"
         android:hint="Jelszó"
         android:inputType="textPassword" />

@@ -189,5 +189,6 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         locationManager.removeUpdates(locationListener);
         calculateDistance();
         mItems.add(new Track(mAuth.getCurrentUser().getUid(), utvonal, System.currentTimeMillis(), distance / 1000, avgSpeed, maxSpeed, Track_Code));
+        finish();
     }
 }

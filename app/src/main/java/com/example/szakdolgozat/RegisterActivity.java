@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.szakdolgozat.Object.UserLayout;
+import com.example.szakdolgozat.Object.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -74,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Log.d(LOG_TAG, "User created successfully");
                         Toast.makeText(RegisterActivity.this, "Felhasználó sikeresen létrehozva", Toast.LENGTH_LONG).show();
-                        mItems.add(new UserLayout(userEmail, password, userName, mAuth.getCurrentUser().getUid()));
+                        mItems.add(new User(userEmail, password, userName, mAuth.getCurrentUser().getUid()));
                         MainMenu();
                     } else {
                         Log.d(LOG_TAG, "User wasnt created");
